@@ -5,9 +5,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: ${{ github.event.repository.name }}
       - uses: dtolnay/rust-toolchain@stable
-      - run: cargo fetch
+      - uses: actions/checkout@v4
+        with:
+          repository: AaryanSinghChauhan09/SigmaOS-kernel
+          ref: main
+          token: ${{ secrets.SIGMAOS_REPO_TOKEN }}
+          path: SigmaOS-kernel
+      - name: Fetch dependencies
+        working-directory: ${{ github.workspace }}/${{ github.event.repository.name }}
+        run: cargo fetch
       - name: Build
+        working-directory: ${{ github.workspace }}/${{ github.event.repository.name }}
         run: cargo build --release
       - name: Test (FIRST: fast, isolated, repeatable, self-validating, timely)
+        working-directory: ${{ github.workspace }}/${{ github.event.repository.name }}
         run: cargo test --release
