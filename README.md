@@ -1,21 +1,40 @@
-# SigmaOS Desktop
+# SigmaOS-desktop
 
-SigmaOS Desktop contains the desktop component of SigmaOS. The Rust crate
-exposes desktop functionality through `sigmaos_desktop`; the repository also
-includes a Python core validation suite under `tests/`.
+SigmaOS component inspired by Arch Linux and Debian architecture.
 
-## Build and run checks
+## Overview
 
-The Rust crate depends on the sibling `SigmaOS-kernel` repository at
-`../SigmaOS-kernel`. In a local checkout, place both repositories side by side
-and run:
+This component provides essential functionality for the SigmaOS operating system,
+following the modular design principles of Arch Linux and the stability focus of Debian.
 
-```sh
+## Features
+
+- Modular architecture
+- Minimal dependencies
+- Well-documented APIs
+- Comprehensive testing
+
+## Building
+
+```bash
 cargo build --release
-cargo test --release
-python3 -m unittest discover -s tests
 ```
 
-GitHub Actions also checks out the private kernel repository. Configure the
-repository secret `SIGMAOS_REPO_TOKEN` with read access to `SigmaOS-kernel` so
-the workflow can resolve that path dependency.
+## Testing
+
+```bash
+cargo test
+```
+
+## License
+
+MIT License - See LICENSE file for details.
+
+## Contributing
+
+See CONTRIBUTING.md for guidelines.
+
+## Links
+
+- Repository: https://github.com/AaryanSinghChauhan09/SigmaOS-desktop
+- SigmaOS: https://github.com/AaryanSinghChauhan09
