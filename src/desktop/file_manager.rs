@@ -168,15 +168,14 @@ impl FileManager {
 
     /// Get parent path
     fn get_parent_path(&self, path: &str) -> String {
-        let parts: Vec<&str> = path.split('/').collect();
-        if parts.len() <= 1 {
-            return "/".to_string();
-        }
-        let parent = parts[..parts.len() - 1].join("/");
-        if parent.is_empty() {
-            "/".to_string()
+        if let Some(pos) = path.rfind('/') {
+            if pos == 0 {
+                "/".to_string()
+            } else {
+                path[..pos].to_string()
+            }
         } else {
-            format!("/{}", parent)
+            "/".to_string()
         }
     }
 

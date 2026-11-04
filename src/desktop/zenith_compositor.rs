@@ -24,10 +24,7 @@
 use std::string::{String, ToString};
 use std::vec::Vec;
 
-#[cfg(not(feature = "standalone_test"))]
-use crate::klib::HashMap;
-#[cfg(feature = "standalone_test")]
-use std::collections::HashMap;
+use std::collections::{HashMap, BTreeMap};
 
 /// Stub capability token for security-aware windowing
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -144,13 +141,13 @@ impl DamageRegion {
 /// Wayland surface damage tracker
 #[derive(Debug, Clone, Default)]
 pub struct WaylandSurfaceDamageTracker {
-    pub surface_damage: alloc::collections::BTreeMap<u64, DamageRegion>,
+    pub surface_damage: BTreeMap<u64, DamageRegion>,
 }
 
 impl WaylandSurfaceDamageTracker {
     pub fn new() -> Self {
         Self {
-            surface_damage: alloc::collections::BTreeMap::new(),
+            surface_damage: BTreeMap::new(),
         }
     }
 

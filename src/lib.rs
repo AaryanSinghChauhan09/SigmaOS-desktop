@@ -3,10 +3,19 @@
 //! Critical system infrastructure component for SigmaOS,
 //! inspired by Arch Linux and Debian architecture.
 
+pub mod config;
+pub mod desktop;
+pub mod error;
+pub mod service;
+
 use anyhow::Result;
-use log::{info, error};
+use log::info;
 use serde::{Deserialize, Serialize};
 use std::path::Path;
+
+pub use config::Config as DesktopConfig;
+pub use error::{ComponentError, Result as ComponentResult};
+pub use service::Service;
 
 /// Component configuration
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -37,7 +46,7 @@ pub trait Component {
 }
 
 /// Component status
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum ComponentStatus {
     Running,
     Stopped,
@@ -46,12 +55,12 @@ pub enum ComponentStatus {
 }
 
 /// Main component implementation
-pub struct desktop {
+pub struct Desktop {
     config: Config,
     status: ComponentStatus,
 }
 
-impl desktop {
+impl Desktop {
     pub fn new(config: Config) -> Self {
         Self {
             config,
@@ -61,12 +70,12 @@ impl desktop {
 
     pub fn from_config_file<P: AsRef<Path>>(path: P) -> Result<Self> {
         let content = std::fs::read_to_string(path)?;
-        let config: Config = serde_json::from_str(&content)?;
+        let config: Config = toml::from_str(&content)?;
         Ok(Self::new(config))
     }
 }
 
-impl Component for desktop {
+impl Component for Desktop {
     fn name(&self) -> &str {
         "SigmaOS-desktop"
     }
@@ -81,11 +90,11 @@ impl Component for desktop {
         
         // Initialize logging
         if self.config.debug {
-            env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("debug"))
-                .init();
+            let _ = env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("debug"))
+                .try_init();
         } else {
-            env_logger::Builder::from_env(env_logger::Env::default().default_filter_or(&self.config.log_level))
-                .init();
+            let _ = env_logger::Builder::from_env(env_logger::Env::default().default_filter_or(&self.config.log_level))
+                .try_init();
         }
         
         info!("Component configuration: {:?}", self.config);
@@ -117,21 +126,21 @@ mod tests {
     #[test]
     fn test_component_creation() {
         let config = Config::default();
-        let component = desktop::new(config);
+        let component = Desktop::new(config);
         assert_eq!(component.name(), "SigmaOS-desktop");
         assert_eq!(component.version(), "0.1.0");
     }
 
     #[test]
     fn test_initialization() {
-        let mut component = desktop::new(Config::default());
+        let mut component = Desktop::new(Config::default());
         component.initialize().unwrap();
         assert!(matches!(component.status(), ComponentStatus::Stopped));
     }
 
     #[test]
     fn test_start_stop() {
-        let mut component = desktop::new(Config::default());
+        let mut component = Desktop::new(Config::default());
         component.initialize().unwrap();
         component.start().unwrap();
         assert!(matches!(component.status(), ComponentStatus::Running));

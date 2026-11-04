@@ -7,7 +7,7 @@ use std::string::String;
 use std::string::ToString;
 use std::vec::Vec;
 
-use crate::klib::HashMap;
+use std::collections::HashMap;
 
 /// Gala Window transition styles
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

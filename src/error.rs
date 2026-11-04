@@ -16,3 +16,9 @@ pub enum ComponentError {
 }
 
 pub type Result<T> = std::result::Result<T, ComponentError>;
+
+impl From<anyhow::Error> for ComponentError {
+    fn from(err: anyhow::Error) -> Self {
+        ComponentError::RuntimeError(err.to_string())
+    }
+}

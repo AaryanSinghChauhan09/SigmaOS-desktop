@@ -586,6 +586,7 @@ mod tests {
         assert!(wizard.can_proceed());
 
         wizard.current_step = OnboardingStep::UserAccountSetup;
+        wizard.set_username(String::new());
         assert!(!wizard.can_proceed());
 
         wizard.set_username(String::from("testuser"));

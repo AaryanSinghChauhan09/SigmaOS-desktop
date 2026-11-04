@@ -179,8 +179,9 @@ impl HyprlandInstance {
         self.active.store(true, Ordering::Relaxed);
 
         // Create default workspace
-        let workspace = HyprlandWorkspace::new(1, "1".to_string());
-        self.workspaces.insert(1, workspace);
+        let id = self.next_workspace_id.fetch_add(1, Ordering::Relaxed);
+        let workspace = HyprlandWorkspace::new(id, "1".to_string());
+        self.workspaces.insert(id, workspace);
     }
 
     /// Create window
