@@ -3,6 +3,7 @@
 //! Critical system infrastructure component for SigmaOS,
 //! inspired by Arch Linux and Debian architecture.
 
+pub mod profile;
 pub mod config;
 pub mod desktop;
 pub mod error;

@@ -1,0 +1,44 @@
+# SigmaOS Desktop Profile — the opinionated default session.
+# Consumed by SigmaOS-installer (desktop step) and SigmaOS-packages.
+# Principle: one profile, documented defaults, everything installs together.
+
+[profile]
+name = "sigmaos-default"
+version = "1.0.0"
+description = "Hyprland-based SigmaOS desktop session"
+
+# Session/compositor layer
+[session]
+compositor = "hyprland"
+shell = ["waybar", "mako", "swww", "swaybg"]
+portal = "xdg-desktop-portal-hyprland"
+
+# Core SigmaOS desktop components (package names in the SigmaOS repo)
+[components]
+core = [
+  "sigmaos-desktop",
+  "sigmaos-shell",
+  "sigmaos-notifications",
+  "sigmaos-launcher",
+  "sigmaos-settings",
+  "sigmaos-theme-engine",
+]
+apps = [
+  "sigmaos-terminal",
+  "sigmaos-file-manager",
+  "sigmaos-browser",
+  "sigmaos-settings-daemon",
+]
+
+# Optional feature groups the user can deselect
+[optional]
+media = ["sigmaos-media-player", "sigmaos-screen-recorder"]
+development = ["sigmaos-code", "sigmaos-terminal-tabs"]
+accessibility = ["sigmaos-screen-reader", "sigmaos-magnifier"]
+
+# Documented defaults (Omarchy-style opinionated config)
+[defaults]
+keymap = "us"
+autostart_shell = true
+night_light_default = false
+animations = true
