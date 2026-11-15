@@ -3,10 +3,10 @@
 //! Critical system infrastructure component for SigmaOS,
 //! inspired by Arch Linux and Debian architecture.
 
-pub mod profile;
 pub mod config;
 pub mod desktop;
 pub mod error;
+pub mod profile;
 pub mod service;
 
 use anyhow::Result;
@@ -88,16 +88,20 @@ impl Component for Desktop {
     fn initialize(&mut self) -> Result<()> {
         info!("Initializing SigmaOS-desktop");
         self.status = ComponentStatus::Initializing;
-        
+
         // Initialize logging
         if self.config.debug {
-            let _ = env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("debug"))
-                .try_init();
+            let _ = env_logger::Builder::from_env(
+                env_logger::Env::default().default_filter_or("debug"),
+            )
+            .try_init();
         } else {
-            let _ = env_logger::Builder::from_env(env_logger::Env::default().default_filter_or(&self.config.log_level))
-                .try_init();
+            let _ = env_logger::Builder::from_env(
+                env_logger::Env::default().default_filter_or(&self.config.log_level),
+            )
+            .try_init();
         }
-        
+
         info!("Component configuration: {:?}", self.config);
         self.status = ComponentStatus::Stopped;
         Ok(())

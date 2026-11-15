@@ -24,7 +24,7 @@
 use std::string::{String, ToString};
 use std::vec::Vec;
 
-use std::collections::{HashMap, BTreeMap};
+use std::collections::{BTreeMap, HashMap};
 
 /// Stub capability token for security-aware windowing
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

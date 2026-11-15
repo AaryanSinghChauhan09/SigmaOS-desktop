@@ -1,6 +1,6 @@
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use std::fs;
-use anyhow::Result;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Config {
@@ -44,7 +44,7 @@ impl Config {
         if !self.enabled {
             return Ok(());
         }
-        
+
         log::info!("Processing with log level: {}", self.log_level);
         Ok(())
     }

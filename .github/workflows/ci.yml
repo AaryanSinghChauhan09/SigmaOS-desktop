@@ -1,25 +1,39 @@
-name: ci
-on: [push, pull_request]
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
 jobs:
-  test:
+  hygiene:
+    name: Repository Hygiene
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          path: ${{ github.event.repository.name }}
-      - uses: dtolnay/rust-toolchain@stable
+      - name: Require non-empty README
+        run: test -s README.md
+
+  build-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v4
-        with:
-          repository: AaryanSinghChauhan09/SigmaOS-kernel
-          ref: main
-          token: ${{ secrets.SIGMAOS_REPO_TOKEN }}
-          path: SigmaOS-kernel
-      - name: Fetch dependencies
-        working-directory: ${{ github.workspace }}/${{ github.event.repository.name }}
-        run: cargo fetch
-      - name: Build
-        working-directory: ${{ github.workspace }}/${{ github.event.repository.name }}
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build release
         run: cargo build --release
-      - name: Test (FIRST: fast, isolated, repeatable, self-validating, timely)
-        working-directory: ${{ github.workspace }}/${{ github.event.repository.name }}
+
+      - name: Run tests
         run: cargo test --release
