@@ -50,12 +50,12 @@ impl NetConnectionStatus {
 pub enum SecurityType {
     None,
     WEP,
-    WPA_PSK,
-    WPA_EAP,
-    WPA2_PSK,
-    WPA2_EAP,
-    WPA3_PSK,
-    WPA3_EAP,
+    WpaPsk,
+    WpaEap,
+    Wpa2Psk,
+    Wpa2Eap,
+    Wpa3Psk,
+    Wpa3Eap,
 }
 
 impl SecurityType {
@@ -63,12 +63,12 @@ impl SecurityType {
         match self {
             SecurityType::None => "none",
             SecurityType::WEP => "wep",
-            SecurityType::WPA_PSK => "wpa-psk",
-            SecurityType::WPA_EAP => "wpa-eap",
-            SecurityType::WPA2_PSK => "wpa2-psk",
-            SecurityType::WPA2_EAP => "wpa2-eap",
-            SecurityType::WPA3_PSK => "wpa3-psk",
-            SecurityType::WPA3_EAP => "wpa3-eap",
+            SecurityType::WpaPsk => "wpa-psk",
+            SecurityType::WpaEap => "wpa-eap",
+            SecurityType::Wpa2Psk => "wpa2-psk",
+            SecurityType::Wpa2Eap => "wpa2-eap",
+            SecurityType::Wpa3Psk => "wpa3-psk",
+            SecurityType::Wpa3Eap => "wpa3-eap",
         }
     }
 }
@@ -173,7 +173,7 @@ impl DesktopNetworkManager {
             NetConnectionType::WiFi,
             "wlan0".to_string(),
         )
-        .with_security(SecurityType::WPA2_PSK);
+        .with_security(SecurityType::Wpa2Psk);
 
         self.connections.insert(eth0.id.clone(), eth0);
         self.connections.insert(wlan0.id.clone(), wlan0);
@@ -508,10 +508,10 @@ mod tests {
             NetConnectionType::WiFi,
             "wlan1".to_string(),
         )
-        .with_security(SecurityType::WPA3_PSK);
+        .with_security(SecurityType::Wpa3Psk);
 
         let id = manager.add_connection(conn);
         let retrieved = manager.get_connection(&id).unwrap();
-        assert_eq!(retrieved.security, Some(SecurityType::WPA3_PSK));
+        assert_eq!(retrieved.security, Some(SecurityType::Wpa3Psk));
     }
 }
