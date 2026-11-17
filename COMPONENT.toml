@@ -1,7 +1,7 @@
 [component]
 name = "SigmaOS-desktop"
 tier = 2
-stability = "scaffold"
+stability = "beta"
 language = "rust"
 description = "Wayland compositor shell & desktop primitives"
 upstream = []
@@ -11,6 +11,6 @@ provides = ["component"]
 depends_on = ["SigmaOS-filesystem", "SigmaOS-kernel", "SigmaOS-network", "SigmaOS-system"]
 
 [maturity]
-status = "Scaffold"
+status = "Implemented"
 test_evidence = "Compiles and passes AAA unit tests"
 next_milestone = "Hardware and runtime integration"
