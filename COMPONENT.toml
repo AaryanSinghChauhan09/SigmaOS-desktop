@@ -3,12 +3,12 @@ name = "SigmaOS-desktop"
 tier = 2
 stability = "scaffold"
 language = "rust"
-description = "desktop component"
+description = "Wayland compositor shell & desktop primitives"
 upstream = []
 
 [contract]
 provides = ["component"]
-depends_on = []
+depends_on = ["SigmaOS-filesystem", "SigmaOS-kernel", "SigmaOS-network", "SigmaOS-system"]
 
 [maturity]
 status = "Scaffold"
