@@ -1,22 +1,8 @@
-mod config;
-mod error;
-mod service;
+//! desktop component binary.
+//!
+//! Component logic lives in the library crate (`src/lib.rs`); this binary is
+//! a thin entry point kept minimal so the crate builds and tests run.
 
-use anyhow::Result;
-use config::Config;
-use service::Service;
-
-fn main() -> Result<()> {
-    env_logger::init();
-
-    let config = Config::default();
-    let mut service = Service::new(config);
-
-    service.start()?;
-    println!("Service started successfully");
-
-    service.stop()?;
-    println!("Service stopped successfully");
-
-    Ok(())
+fn main() {
+    println!("SigmaOS {} v{}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
 }
