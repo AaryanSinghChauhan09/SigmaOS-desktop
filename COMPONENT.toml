@@ -8,7 +8,7 @@ upstream = []
 
 [contract]
 provides = ["component"]
-depends_on = ["SigmaOS-filesystem", "SigmaOS-kernel", "SigmaOS-network", "SigmaOS-system"]
+depends_on = ["SigmaOS-kernel", "SigmaOS-system"]
 
 [maturity]
 status = "Implemented"
